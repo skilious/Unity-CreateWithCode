@@ -1,23 +1,73 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    private float speed = 20f;
-    private float turnSpeed = 20f;
-    private float horizontalInput;
-    private float verticalInput;
-    void Update()
-    {
-        horizontalInput = Input.GetAxis("Horizontal"); //Input name from Unity's Input system - Left and Right steering
-        verticalInput = Input.GetAxis("Vertical"); //Input name from Unity's Input system - Forward and Backward acceleration/reverse
-        //Move the vehicle forward
-        //transform.Translate(0, 0, 1);
-        transform.Translate(transform.forward * Time.deltaTime * speed * verticalInput); //Clean version.
+    [SerializeField] float horizontalInput;
+    [SerializeField] float turnRate;
 
-        //Turn left/right
-        //transform.Translate(Vector3.right * Time.deltaTime * turnSpeed * horizontalInput); Problem - This just moves the car side to side. No sort of rotation whatsoever.
-        transform.Rotate(Vector3.up, turnSpeed * horizontalInput * Time.deltaTime); //This now rotates by using Vector3.up (Y Axis rotation) and Steering input with Time.deltaTime.
+    [SerializeField] float verticalInput;
+    [SerializeField] float horsePower = 20.0f;
+    [SerializeField] float speed;
+    [SerializeField] float rpm;
+
+    [SerializeField] GameObject centerOfMass;
+
+    [SerializeField] TextMeshProUGUI speedometerText;
+    [SerializeField] TextMeshProUGUI rpmText;
+
+    [SerializeField] WheelCollider[] wheelColliders;
+    
+    private int wheelsOnGround;
+
+    private Rigidbody _rb;
+
+    private void Start()
+    {
+        _rb = GetComponent<Rigidbody>();
+        _rb.centerOfMass = centerOfMass.transform.position;
+    }
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        // Player movement left to right
+        if(IsOnGround())
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = Input.GetAxis("Vertical");
+
+            transform.Rotate(Vector3.up * Time.deltaTime * turnRate * horizontalInput);
+
+            _rb.AddRelativeForce(Vector3.forward * horsePower * verticalInput);
+
+            speed = Mathf.Round(_rb.velocity.magnitude * 3.6f); //2.237f for mph.
+            speedometerText.SetText("Speed: " + speed + " kph");
+
+            rpm = Mathf.Round((speed % 30) * 40);
+            rpmText.SetText("RPM: " + rpm);
+        }
+
+    }
+
+    private bool IsOnGround()
+    {
+        wheelsOnGround = 0;
+        foreach(WheelCollider wheel in wheelColliders)
+        {
+            if(wheel.isGrounded)
+            {
+                wheelsOnGround++;
+            }
+        }
+        if(wheelsOnGround == 4)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

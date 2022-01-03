@@ -12,7 +12,7 @@ public class MoveForward : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(other.gameObject);
-        Destroy(gameObject);
+        other.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }

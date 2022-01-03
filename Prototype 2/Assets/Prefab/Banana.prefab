@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 1939367898751947539}
   - component: {fileID: 1927784350690629101}
   - component: {fileID: 1914635377584598392}
-  - component: {fileID: 7267516266963872588}
   - component: {fileID: 7818392938038518133}
+  - component: {fileID: 1435606462334694534}
   m_Layer: 0
   m_Name: Banana
   m_TagString: Untagged
@@ -97,20 +97,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 40
---- !u!114 &7267516266963872588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1915745006823629577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b836ff4fa26674e49bcdd59b2e6a1b54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  zRangeTop: 30
-  zRangeBottom: 30
 --- !u!65 &7818392938038518133
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -124,3 +110,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.50622404, y: 0.47573793, z: 0.4844519}
   m_Center: {x: 0, y: 0.009565257, z: 0.021385126}
+--- !u!54 &1435606462334694534
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915745006823629577}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
